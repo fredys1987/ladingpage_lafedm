@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="es">
+<!--
+  =============================================================
+  LA FE DISTRIBUCIONES MÉDICAS — PÁGINA DE INICIO
+  =============================================================
+
+  ARCHIVOS QUE COMPONEN EL SITIO
+    index.html ....... esta página
+    nosotros.html .... página de empresa
+    pqrsf.html ....... formulario de PQRSF
+    css/styles.css ... TODOS los estilos de las tres páginas
+    js/script.js ..... menú móvil y animaciones de entrada
+    encuesta/ ........ sistema de encuestas (proyecto aparte, con su propio PHP)
+
+  ORDEN DE LAS SECCIONES EN ESTA PÁGINA
+    1. Topbar .......... teléfono y redes (barra azul de arriba)
+    2. Header .......... logo y menú de navegación
+    3. Hero ............ portada con la foto de fondo
+    4. Trust ........... las tres tarjetas de confianza
+    5. Banda de marcas . franja con los nombres desplazándose
+    6. Servicios ....... qué ofrece la empresa
+    7. Contacto ........ datos y formulario
+    8. Ubicación ....... mapa
+    9. Footer .......... pie con enlaces y contacto
+
+  CÓMO CAMBIAR LO MÁS HABITUAL
+    · Textos ................ directamente aquí, en el HTML
+    · Colores y tamaños ..... css/styles.css (arriba están las variables)
+    · Teléfono y WhatsApp ... busca "573000000000" y reemplázalo
+    · Imágenes .............. carpeta assets/img/
+    · Enlaces del menú ...... sección del header, más abajo
+
+  Los comentarios de cada sección explican qué hace y qué se puede tocar.
+  =============================================================
+-->
+
+<head>
+  <!-- =========================================================
+       CONFIGURACIÓN GENERAL DEL DOCUMENTO
+       ========================================================= -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LA FE Distribuciones Médicas</title>
+  <meta name="description"
+    content="Distribución farmacéutica y dispositivos médicos con atención ágil, inventario organizado y soporte por WhatsApp." />
+  <meta name="theme-color" content="#007BE1" />
+
+  <!-- Icono de la pestaña (favicon).
+       Sale de assets/img/logo.webp, el isotipo CUADRADO. No se usa
+       logofdm.png porque es apaisado (1.78:1) y a 32px su texto
+       "DISTRIBUCIONES MEDICAS" queda ilegible.
+       El .ico lleva 16/32/48px dentro; los PNG cubren pantallas
+       modernas y el icono de escritorio en móvil. -->
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16.png" />
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Respaldo mientras no estén las fuentes de marca (ver css/tipografia.css).
+       Michroma sustituye a Geometos y Poppins a Cocogoose Pro. -->
+  <link href="https://fonts.googleapis.com/css2?family=Michroma&family=Poppins:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <!-- Sistema tipográfico: define las fuentes de marca. Va primero. -->
+  <link rel="stylesheet" href="css/tipografia.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+
+<body>
+
+<!-- =========================================================
+       HEADER PRINCIPAL
+       Se queda pegado arriba al hacer scroll (sticky).
+       ========================================================= -->
+  <header class="header">
+    <div class="container nav-wrap">
+      <!-- Marca / logo -->
+      <a href="#inicio" class="brand">
+        <!-- El logotipo ya incluye el nombre completo de la empresa, así
+             que no se repite en texto al lado. El alt lo aporta para
+             quien use lector de pantalla y para los buscadores. -->
+        <img src="assets/img/logofdm.png" alt="LA FE Distribuciones Médicas" class="brand-logo" />
+      </a>
+
+      <!-- Navegación
+
+           Dos tipos de enlace conviven aquí:
+             href="#servicios" ..... baja a una sección DE ESTA página
+             href="nosotros.html" .. abre OTRA página
+
+           Los que empiezan por # deben coincidir con el id de la sección
+           correspondiente (por ejemplo <section id="servicios">). Si cambias
+           un id, acuérdate de cambiar también el enlace o dejará de funcionar.
+
+           El id="nav" lo usa script.js para abrir y cerrar el menú en móvil:
+           no lo quites. -->
+      <nav class="nav" id="nav">
+        <a href="index.html" class="is-current">Inicio</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#contacto">Contacto</a>
+        <a href="#ubicacion">Ubicación</a>
+        <a href="pqrsf.html">PQRSF</a>
+      </nav>
+
+      <!-- Acciones del header -->
+      <div class="nav-actions">
+        <!-- Botón hamburguesa para móvil -->
+        <button class="menu-btn" id="menuBtn" aria-label="Abrir menú">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       CONTENIDO PRINCIPAL
+       ========================================================= -->
+  <main id="inicio">
+    <!-- =======================================================
+         HERO DE PANTALLA COMPLETA
+         ======================================================= -->
+    <!-- =======================================================
+         HERO CLARO
+         Ahora el hero tiene fondo claro y una imagen de estantes
+         de productos farmacéuticos al lado derecho.
+         ======================================================= -->
+    <!-- =======================================================
+         HERO (PORTADA)
+
+         La foto va como fondo de toda la sección y el texto encima.
+         Se apila en tres capas, en este orden:
+           1. <img>   la fotografía
+           2. <div>   velo oscuro, para que el texto blanco se lea
+           3. .container  el título, los botones y los KPIs
+
+         PARA CAMBIAR LA FOTO: sustituye el src de la etiqueta <img> de abajo.
+         Guarda la imagen nueva en assets/img/ y usa formato .webp si puedes
+         (pesa mucho menos que .png o .jpg y carga más rápido).
+
+         El aspecto (alto, oscurecido, tamaño del título) se ajusta en
+         css/styles.css, buscando "HERO A PANTALLA COMPLETA".
+         ======================================================= -->
+    <section class="hero hero-light hero-cover" id="inicio">
+      <!-- fetchpriority="high" le dice al navegador que cargue esta imagen
+           antes que el resto: es lo primero que ve el visitante. -->
+      <img class="hero-cover-img" src="assets/img/hero.webp" alt="Estantes de productos farmacéuticos de LA FE"
+        fetchpriority="high" decoding="async" />
+
+      <!-- Velo oscuro. aria-hidden lo oculta a los lectores de pantalla
+           porque es decorativo, no contenido. -->
+      <div class="hero-cover-overlay" aria-hidden="true"></div>
+
+      <div class="container hero-light-grid">
+        <div class="hero-copy hero-copy-light reveal">
+          <h1 class="hero-title hero-title-light">Comprometidos con tu <em>bienestar</em></h1>
+          <p class="hero-text hero-text-dark">
+            Distribuimos medicamentos, dispositivos e insumos médicos con abastecimiento
+            confiable, atención cercana y entregas puntuales para instituciones de salud,
+            droguerías y profesionales.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn btn-primary"
+              href="https://wa.me/573000000000?text=Hola%20quiero%20informaci%C3%B3n%20sobre%20LA%20FE" target="_blank"
+              rel="noopener">Hablar por WhatsApp</a>
+            <a class="btn btn-outline" href="#servicios">Ver servicios</a>
+          </div>
+
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =======================================================
+         BLOQUE DE CONFIANZA
+         ======================================================= -->
+    <section class="trust">
+      <div class="container trust-grid reveal">
+        <article class="trust-card">
+          <div class="trust-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 2 4 5v6.5c0 4.5 3.2 8.7 8 10.5 4.8-1.8 8-6 8-10.5V5l-8-3Zm0 2.15 6 2.25v5.1c0 3.5-2.4 6.8-6 8.4-3.6-1.6-6-4.9-6-8.4V6.4l6-2.25Zm3.3 4.9-4.4 4.4-1.9-1.9a1 1 0 0 0-1.4 1.42l2.6 2.6a1 1 0 0 0 1.42 0l5.1-5.1a1 1 0 1 0-1.42-1.42Z" />
+            </svg>
+          </div>
+          <strong>Productos con respaldo</strong>
+          <p>Medicamentos, dispositivos e insumos de marcas confiables, con la trazabilidad que exige el sector salud.</p>
+        </article>
+
+        <article class="trust-card">
+          <div class="trust-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M3 5a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v2h2.6a1 1 0 0 1 .8.4l2.4 3.2a1 1 0 0 1 .2.6V16a1 1 0 0 1-1 1h-1.2a3 3 0 0 1-5.6 0H9.8a3 3 0 0 1-5.6 0H4a1 1 0 0 1-1-1V5Zm2 1v9h.2a3 3 0 0 1 5.6 0H12V6H5Zm9 3v6h.2a3 3 0 0 1 5.6 0H19v-4.47L17.1 9H14ZM7 15.5a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5Zm10 0a1.25 1.25 0 1 0 0 2.5 1.25 1.25 0 0 0 0-2.5Z" />
+            </svg>
+          </div>
+          <strong>Entregas a tiempo</strong>
+          <p>Cobertura regional y operación propia para que el pedido llegue completo y cuando se necesita.</p>
+        </article>
+
+        <article class="trust-card">
+          <div class="trust-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M12 3a8 8 0 0 0-8 8v4a3 3 0 0 0 3 3h1a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H6v-0a6 6 0 0 1 12 0v0h-2a1 1 0 0 0-1 1v5a1 1 0 0 0 1 1h1a3 3 0 0 0 .83-.12A3 3 0 0 1 15 20h-2a1 1 0 1 0 0 2h2a5 5 0 0 0 5-5v-6a8 8 0 0 0-8-8Z" />
+            </svg>
+          </div>
+          <strong>Atención cercana</strong>
+          <p>Un equipo que conoce tu operación y responde con agilidad a cada consulta, pedido o solicitud.</p>
+        </article>
+      </div>
+    </section>
+    <!-- bloque pegado por mi -->
+    <section class="feature-story feature-story-soft">
+      <div class="container feature-story-grid">
+        <!-- La foto está a la izquierda del grid, así que entra por la izquierda. -->
+        <div class="feature-photo reveal reveal-left">
+          <img src="assets/img/atencion-personalizada.webp" alt="Atención personalizada y oportuna de LA FE" />
+        </div>
+
+        <!-- El texto está a la derecha: entra por la derecha, con un pequeño
+             retardo para que no lleguen los dos a la vez. -->
+        <div class="feature-copy reveal reveal-right delay-1">
+          <h2>Atención personalizada y oportuna</h2>
+          <p>
+            Contamos con un equipo profesional de atención altamente capacitado, preparado para atender tus
+            requerimientos
+            de manera eficiente, cercana y oportuna.
+          </p>
+          <p>
+            Nuestro personal está comprometido con brindar un servicio ágil y confiable, asegurando una experiencia de
+            calidad
+            en cada contacto con nuestros clientes.
+          </p>
+          <p>
+            Te invitamos a comunicarte con nosotros y permitirnos atender tus consultas, pedidos o solicitudes con la
+            seriedad
+            y el compromiso que tu negocio merece.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="feature-story">
+      <div class="container feature-story-grid feature-story-grid-reverse">
+        <!-- Esta sección va invertida (feature-story-grid-reverse): el texto
+             queda a la izquierda y la foto a la derecha, así que las
+             direcciones también se invierten. -->
+        <div class="feature-copy reveal reveal-left">
+          <h2>Amplio portafolio</h2>
+          <p>
+            Ofrecemos un amplio portafolio de medicamentos, dispositivos e insumos médicos, trabajado con marcas
+            confiables
+            para garantizar un abastecimiento completo, seguro y continuo para tu negocio o institución de salud.
+          </p>
+          <p>
+            Nuestra selección está pensada para responder a distintas necesidades del sector, facilitando el acceso a
+            productos
+            esenciales con una presentación profesional y organizada.
+          </p>
+        </div>
+
+        <div class="feature-photo reveal reveal-right delay-1">
+          <img src="assets/img/amplio-portafolio.webp" alt="Amplio portafolio de productos en estanterías" />
+        </div>
+      </div>
+    </section>
+
+    <section class="feature-story feature-story-accent">
+      <div class="container feature-story-grid">
+        <div class="feature-photo reveal reveal-left">
+          <img src="assets/img/logistica-eficiente.webp" alt="Logística eficiente y preparación de pedidos en LA FE" />
+        </div>
+
+        <div class="feature-copy reveal reveal-right delay-1">
+          <h2>Logística eficiente</h2>
+          <p>
+            Garantizamos entregas rápidas, seguras y puntuales, respaldadas por una cobertura estratégica que nos
+            permite
+            llegar de manera oportuna a nuestros clientes.
+          </p>
+          <p>
+            Cada pedido es gestionado con estricto control y trazabilidad, asegurando el correcto manejo de los
+            productos
+            en cada etapa del proceso logístico.
+          </p>
+          <p>
+            Nuestro servicio logístico cuenta con un equipo altamente capacitado que opera bajo estándares de calidad,
+            brindando continuidad y confianza en el abastecimiento.
+          </p>
+        </div>
+      </div>
+    </section>
+    <!-- =======================================================
+         BANDA DE MARCAS
+         Esta franja muestra marcas desplazándose de derecha a izquierda.
+         Luego puedes reemplazar estos nombres por tus marcas reales o logos.
+         ======================================================= -->
+
+    <!-- =======================================================
+         SECCIONES INFORMATIVAS CON IMAGEN Y TEXTO
+         Estas tres secciones siguen el estilo de referencia:
+         imagen a un lado, texto al otro y disposición alternada.
+         ======================================================= -->
+
+    <!-- =======================================================
+         BANDA DE MARCAS
+         Se ajustó a un estilo más limpio, centrado y similar
+         a la referencia enviada por el usuario.
+         ======================================================= -->
+    <!-- =======================================================
+         BANDA DE MARCAS
+
+         Franja con los nombres de marcas desplazándose en bucle.
+         Se detiene al pasar el ratón por encima.
+
+         PARA CAMBIAR LAS MARCAS: edita los <span> de abajo.
+         IMPORTANTE: la lista está DUPLICADA y las dos copias deben ser
+         iguales. La animación desplaza exactamente la mitad del ancho, así
+         que cuando termina el primer grupo el segundo cae justo en su sitio
+         y el bucle no da saltos. Si añades una marca, añádela en los dos
+         grupos; si quitas una, quítala de ambos.
+
+         La velocidad se cambia en css/styles.css, en .brands-track-right
+         (los "28s" de la animación: más segundos = más lento).
+         ======================================================= -->
+    <section class="brands-band">
+      <div class="brands-marquee">
+        <div class="brands-track brands-track-right">
+          <!-- ---- Grupo 1: el que se ve ---- -->
+          <span>Abbott</span>
+          <span>Baxter</span>
+          <span>Roche</span>
+          <span>Pfizer</span>
+          <span>3M</span>
+          <span>B. Braun</span>
+
+          <!-- ---- Grupo 2: copia idéntica que hace continuo el bucle.
+                    aria-hidden evita que los lectores de pantalla lean
+                    las marcas dos veces. ---- -->
+          <span aria-hidden="true">Abbott</span>
+          <span aria-hidden="true">Baxter</span>
+          <span aria-hidden="true">Roche</span>
+          <span aria-hidden="true">Pfizer</span>
+          <span aria-hidden="true">3M</span>
+          <span aria-hidden="true">B. Braun</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- =======================================================
+         SECCIÓN SERVICIOS
+         ======================================================= -->
+    <section class="section" id="servicios">
+      <div class="container">
+        <div class="section-head reveal">
+          <p class="eyebrow">Servicios</p>
+          <h2>Una portada pensada para vender confianza</h2>
+          <p>No es un banner genérico. Es una estructura clara para comunicar distribución, operación y respuesta
+            comercial.</p>
+        </div>
+
+        <!-- Estas tres tarjetas van en fila. Entran creciendo (reveal-zoom) y
+             escalonadas con los delay, para que se vea una cascada de
+             izquierda a derecha en vez de aparecer todas de golpe. -->
+        <div class="cards-grid">
+          <article class="info-card reveal reveal-zoom">
+            <span class="card-num">01</span>
+            <h3>Distribución farmacéutica</h3>
+            <p>Presenta productos, categorías y cobertura con una identidad más profesional.</p>
+          </article>
+          <article class="info-card reveal reveal-zoom delay-1">
+            <span class="card-num">02</span>
+            <h3>Dispositivos médicos</h3>
+            <p>Mejor percepción de seriedad para clientes, clínicas, droguerías y aliados.</p>
+          </article>
+          <article class="info-card reveal reveal-zoom delay-2">
+            <span class="card-num">03</span>
+            <h3>Pedidos y seguimiento</h3>
+            <p>Base visual preparada para después conectar formularios, checkout y WhatsApp.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- =======================================================
+         FORMULARIO DE CONTACTO
+         ======================================================= -->
+    <section class="section contact" id="contacto">
+      <div class="container contact-grid">
+        <!-- Texto a la izquierda, formulario a la derecha. -->
+        <div class="contact-copy reveal reveal-left">
+          <p class="eyebrow">Contacto</p>
+          <h2>Cuéntanos qué necesitas y te contactamos</h2>
+          <p>
+            Este formulario sirve para solicitudes comerciales. Más abajo también queda el acceso a la nueva
+            página de PQRSF para trámites formales.
+          </p>
+
+          <div class="contact-points">
+            <article>
+              <strong>Respuesta comercial</strong>
+              <span>Ideal para cotizaciones, pedidos y consultas.</span>
+            </article>
+            <article>
+              <strong>Datos ordenados</strong>
+              <span>Nombre, correo, teléfono, servicio y mensaje.</span>
+            </article>
+            <article>
+              <strong>Canales claros</strong>
+              <span>Contacto comercial por aquí y PQRSF en página separada.</span>
+            </article>
+          </div>
+
+          <div class="inline-link-box">
+            <a class="btn btn-outline" href="pqrsf.html">Ir a la página PQRSF</a>
+          </div>
+        </div>
+
+        <!-- FORMULARIO DE CONTACTO
+
+             OJO CON CÓMO FUNCIONA: no envía correos ni guarda los datos en
+             ninguna parte. Al pulsar enviar, script.js recoge los campos,
+             arma un mensaje y abre WhatsApp con el texto ya escrito. La
+             persona todavía tiene que pulsar enviar allí.
+
+             Si nadie completa ese último paso, la solicitud se pierde: no
+             queda registro. Para guardarlas haría falta añadir un PHP que
+             las reciba.
+
+             AL AÑADIR O QUITAR CAMPOS: cada uno necesita un id único, y ese
+             mismo id hay que usarlo en script.js (busca "contactForm") tanto
+             para leer el valor como para incluirlo en el mensaje. Si añades
+             un campo aquí y no lo tocas allí, simplemente no se enviará. -->
+        <form class="contact-form reveal reveal-right delay-1" id="contactForm">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="nombre">Nombre completo</label>
+              <input type="text" id="nombre" name="nombre" placeholder="Escribe tu nombre" required>
+            </div>
+
+            <div class="form-group">
+              <label for="telefono">Teléfono</label>
+              <input type="tel" id="telefono" name="telefono" placeholder="Ej. 3001234567" required>
+            </div>
+
+            <div class="form-group">
+              <label for="correo">Correo electrónico</label>
+              <input type="email" id="correo" name="correo" placeholder="tucorreo@empresa.com" required>
+            </div>
+
+            <div class="form-group">
+              <label for="servicio">Tipo de solicitud</label>
+              <select id="servicio" name="servicio" required>
+                <option value="" disabled selected>Selecciona una opción</option>
+                <option value="Cotización de productos">Cotización de productos</option>
+                <option value="Información de dispositivos médicos">Información de dispositivos médicos</option>
+                <option value="Consulta de inventario">Consulta de inventario</option>
+                <option value="Alianza comercial">Alianza comercial</option>
+                <option value="Otro">Otro</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" name="mensaje" rows="5" placeholder="Cuéntanos qué necesitas y cómo podemos ayudarte"
+              required></textarea>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary">Enviar por WhatsApp</button>
+            <a class="btn btn-outline" href="mailto:contacto@lafedm.com">También por correo</a>
+          </div>
+
+          <p class="form-note">Al enviar, se abrirá WhatsApp con tu mensaje listo para enviar.</p>
+          <p class="form-status" id="formStatus" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- =======================================================
+         UBICACIÓN / MAPA
+         ======================================================= -->
+    <!-- =======================================================
+         UBICACIÓN / MAPA EN ANCHO COMPLETO
+         Este bloque usa todo el ancho visible de la página.
+         La parte superior lleva el texto dentro del contenedor,
+         y el mapa se muestra a lo ancho completo.
+         ======================================================= -->
+    <section class="section location-section" id="ubicacion">
+      <div class="container location-intro reveal">
+        <p class="eyebrow">Ubicación</p>
+        <h2>Encuéntranos fácilmente desde cualquier dispositivo</h2>
+        <p>
+          El mapa ahora ocupa todo el ancho de la página para darle más visibilidad en la web.
+          Esto ayuda a que el cliente identifique rápido la ubicación del negocio.
+        </p>
+
+        <div class="location-actions">
+          <a class="btn btn-primary"
+            href="https://www.google.com/maps?q=Cra.%2017%20%2313B%20Bis%20-%2005%2C%20Valledupar%2C%20Cesar"
+            target="_blank" rel="noopener">Cómo llegar</a>
+          <a class="btn btn-outline" href="pqrsf.html">Ir a PQRSF</a>
+        </div>
+      </div>
+
+      <div class="map-full reveal delay-1">
+        <iframe title="Ubicación de LA FE Distribuciones Médicas"
+          src="https://www.google.com/maps?q=Cra.%2017%20%2313B%20Bis%20-%2005%2C%20Valledupar%2C%20Cesar&z=15&output=embed"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen>
+        </iframe>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================================
+       FOOTER
+       ========================================================= -->
+  <!-- =========================================================
+       BOTÓN FLOTANTE DE WHATSAPP
+       Visible en todas las páginas para contacto rápido.
+       ========================================================= -->
+  <a class="whatsapp-float" href="https://wa.me/573000000000?text=Hola%20quiero%20informaci%C3%B3n%20sobre%20LA%20FE"
+    target="_blank" rel="noopener noreferrer" aria-label="Escribir por WhatsApp">
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.91-9.91a9.86 9.86 0 0 0-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 1.67c2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 0 1 2.41 5.82c0 4.54-3.7 8.24-8.25 8.24a8.24 8.24 0 0 1-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.26-8.24Zm-2.9 4.03c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02 0 1.2.87 2.35.99 2.51.12.16 1.7 2.6 4.12 3.64.58.25 1.02.4 1.37.51.58.18 1.1.16 1.52.1.46-.07 1.43-.59 1.63-1.15.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28-.24-.12-1.43-.71-1.65-.79-.22-.08-.38-.12-.54.12-.16.24-.62.79-.76.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.53-1.32-.75-1.8-.18-.4-.36-.4-.53-.4h-.47Z" />
+    </svg>
+  </a>
+
+
+
+
+
+
+  <!-- =========================================================
+       PIE DE PÁGINA
+
+       Se reparte en 5 columnas: el bloque de marca (logo, contacto y
+       redes) más cuatro columnas de enlaces. El número de columnas está
+       fijado en css/styles.css, en .footer-modern-grid.
+
+       SI AÑADES O QUITAS UNA COLUMNA hay que ajustar allí el
+       grid-template-columns, o las que queden se repartirán mal el ancho.
+
+       Este mismo footer está repetido en nosotros.html y pqrsf.html: son
+       archivos independientes, así que un cambio aquí NO se propaga solo.
+       Si editas un enlace, hazlo en las tres páginas.
+       ========================================================= -->
+  <footer class="footer footer-modern">
+    <div class="container footer-modern-grid">
+      <div class="footer-brand-block">
+        <a href="index.html" class="footer-logo-link">
+          <img src="assets/img/logofdm.png" alt="LA FE Distribuciones Médicas" class="footer-logo-large" />
+        </a>
+
+        <div class="footer-contact-list">
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path d="M12 21s7-5.33 7-11a7 7 0 1 0-14 0c0 5.67 7 11 7 11Zm0-9a2 2 0 1 1 0-4 2 2 0 0 1 0 4Z" />
+              </svg>
+            </span>
+            <p>Cra. 17 #13B Bis - 05, Valledupar, Cesar</p>
+          </div>
+
+          <div class="footer-contact-item">
+            <span class="footer-contact-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M6.6 10.8c1.8 3.5 3.1 4.8 6.6 6.6l2.2-2.2c.3-.3.8-.4 1.2-.3 1 .3 2.1.5 3.2.5.7 0 1.2.5 1.2 1.2V20c0 .7-.5 1.2-1.2 1.2C10.4 21.2 2.8 13.6 2.8 4.2 2.8 3.5 3.3 3 4 3h3.4c.7 0 1.2.5 1.2 1.2 0 1.1.2 2.2.5 3.2.1.4 0 .9-.3 1.2l-2.2 2.2Z" />
+              </svg>
+            </span>
+            <p>Tel: 6055898530</p>
+          </div>
+
+          <div class="footer-socials">
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M13.5 21v-7h2.4l.4-3h-2.8V9.1c0-.9.2-1.6 1.5-1.6H16V4.8c-.2 0-.9-.1-1.8-.1-2.6 0-4.2 1.6-4.2 4.5V11H7v3h3v7h3.5Z" />
+              </svg>
+            </a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4Zm5 5.2A3.8 3.8 0 1 0 12 19.8 3.8 3.8 0 0 0 12 8.2Zm0 6.2A2.4 2.4 0 1 1 12 9.6a2.4 2.4 0 0 1 0 4.8Zm4.8-6.7a.9.9 0 1 0 0-1.8.9.9 0 0 0 0 1.8Z" />
+              </svg>
+            </a>
+            <a href="https://wa.me/573000000000" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.9-4.45 9.91-9.91a9.86 9.86 0 0 0-2.9-7.01A9.82 9.82 0 0 0 12.04 2Zm0 1.67c2.2 0 4.27.86 5.83 2.42a8.2 8.2 0 0 1 2.41 5.82c0 4.54-3.7 8.24-8.25 8.24a8.24 8.24 0 0 1-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.19 8.19 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.26-8.24Zm-2.9 4.03c-.16 0-.42.06-.64.3-.22.24-.85.83-.85 2.02 0 1.2.87 2.35.99 2.51.12.16 1.7 2.6 4.12 3.64.58.25 1.02.4 1.37.51.58.18 1.1.16 1.52.1.46-.07 1.43-.59 1.63-1.15.2-.56.2-1.04.14-1.14-.06-.1-.22-.16-.46-.28-.24-.12-1.43-.71-1.65-.79-.22-.08-.38-.12-.54.12-.16.24-.62.79-.76.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2-.72-.64-1.2-1.43-1.34-1.67-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.53-1.32-.75-1.8-.18-.4-.36-.4-.53-.4h-.47Z" />
+              </svg>
+            </a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M6.8 8.6a1.9 1.9 0 1 1 0-3.8 1.9 1.9 0 0 1 0 3.8ZM5.1 10h3.3v9.9H5.1V10Zm5.4 0h3.2v1.4h.1c.4-.8 1.5-1.8 3.2-1.8 3.4 0 4 2.2 4 5.1v5.2h-3.3v-4.6c0-1.1 0-2.5-1.6-2.5s-1.8 1.2-1.8 2.4v4.7h-3.3V10Z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-links-column">
+        <h3>Menú</h3>
+        <a href="index.html">Inicio</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="index.html#servicios">Servicios</a>
+        <a href="index.html#contacto">Contacto</a>
+        <a href="index.html#ubicacion">Ubicación</a>
+        <a href="pqrsf.html">PQRSF</a>
+        <a href="encuesta/index.html">Encuestas</a>
+      </div>
+
+      <div class="footer-links-column">
+        <h3>Accesos rápidos</h3>
+        <a href="nosotros.html">Nuestra empresa</a>
+        <a href="trabaja-con-nosotros.html">Trabaja con Nosotros</a>
+        <a href="index.html#contacto">Solicitar asesoría</a>
+        <a href="pqrsf.html">Radicar PQRSF</a>
+        <a href="index.html#ubicacion">Cómo llegar</a>
+      </div>
+
+      <div class="footer-links-column">
+        <h3>Servicio al usuario</h3>
+        <a href="pqrsf.html">Preguntas y solicitudes</a>
+        <a href="pqrsf.html">Aviso a la comunidad</a>
+        <a href="pqrsf.html">Atención PQRSF</a>
+      </div>
+
+      <div class="footer-links-column">
+        <h3>Contacto</h3>
+        <a href="index.html#contacto">Ventas comerciales</a>
+        <a href="index.html#contacto">Convenios institucionales</a>
+        <a href="pqrsf.html">Radicar PQRS</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom-bar">
+      <div class="container footer-bottom-inner">
+        <p>© Todos los derechos reservados por LA FE Distribuciones Médicas S.A.S.</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <!-- JavaScript principal -->
+  <script src="js/script.js"></script>
+</body>
+
+</html>

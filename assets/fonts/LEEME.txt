@@ -1,0 +1,40 @@
+FUENTES DEL MANUAL DE MARCA — LA FE DISTRIBUCIONES MEDICAS
+===========================================================
+
+Esta carpeta esta VACIA a proposito. Aqui van los archivos de las
+dos fuentes corporativas cuando se compre la licencia web.
+
+ARCHIVOS QUE HAY QUE COPIAR AQUI (formato .woff2):
+
+    geometos-bold.woff2
+    geometos-black.woff2
+    cocogoose-pro-regular.woff2
+    cocogoose-pro-medium.woff2
+
+Los nombres deben ser EXACTAMENTE esos: css/tipografia.css ya los
+tiene declarados. Al copiarlos, las fuentes se activan solas, sin
+tocar ni una linea de codigo.
+
+DONDE CONSEGUIRLAS
+------------------
+Son fuentes comerciales, no estan en Google Fonts:
+
+    Geometos ........ Typodermic / Deluxe
+    Cocogoose Pro ... Zetafonts
+
+Hay que comprar la licencia WEB (webfont), no solo la de
+escritorio: son licencias distintas.
+
+Si tiene los archivos en .otf o .ttf, conviertalos a .woff2 en
+https://transfonter.org  (gratis, en el navegador). El .woff2 pesa
+mucho menos y es el formato que entienden todos los navegadores
+actuales.
+
+MIENTRAS TANTO
+--------------
+El sitio funciona igual con fuentes de respaldo parecidas:
+
+    Geometos      -> Michroma
+    Cocogoose Pro -> Poppins
+
+Se ve bien, pero no es la tipografia oficial de la marca.

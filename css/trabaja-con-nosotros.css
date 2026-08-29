@@ -1,0 +1,544 @@
+/* =============================================================
+   TRABAJA CON NOSOTROS — estilos propios de la página
+   =============================================================
+
+   Se carga DESPUÉS de css/styles.css. De allí vienen la cabecera,
+   el pie y la escala de títulos, comunes a todo el sitio; aquí solo
+   vive lo que no comparte con las demás páginas.
+
+   ORDEN DE LAS SECCIONES
+     1. .hero ......... titular + foto de la colaboradora
+     2. .why .......... por qué trabajar en LA FE
+     3. .benefits ..... lo que ofrece la empresa
+     4. .closing ...... enlace al portal de vacantes
+     5. .reveal* ...... animaciones de entrada (las mueve js/script.js)
+
+   El header y el footer NO se estilan aquí: son los del sitio.
+
+   CÓMO CAMBIAR LO MÁS HABITUAL
+     · Colores ......... variables :root, justo aquí abajo
+     · Foto del hero ... assets/img/hero_trabaja.png  (en el HTML)
+     · Portal de Buk ... en el HTML, busca "buk.co"
+   ============================================================= */
+/* Variables PROPIAS de esta página.
+
+   Las comunes del sitio (--blue, --lime, --text, --shadow y los
+   alias de tipografía --brand/--body) las define css/styles.css,
+   que se carga antes. No se repiten aquí: duplicarlas haría que
+   un cambio de color en styles.css no llegara a esta página. */
+:root {
+  --blue-hover: #0069c2;
+  --blue-soft: #E8F3FE;
+
+  /* --- Fondos de las secciones de esta página --- */
+  --bg-alt: #F5F8FC;
+
+  /* --- Matices de texto que solo usa esta página --- */
+  --text-soft: #5e6c80;
+  --text-mute: #78859a;
+  --text-faint: #9aa5b5;
+
+  /* --- Líneas --- */
+  --line: #e4ebf5;
+  --line-strong: #cfdcec;
+
+  --wrap: 1240px;
+  --pad: 32px;
+}
+
+/* El reseteo (*, html, body, a, img) lo aporta css/styles.css,
+   igual que en index, nosotros y pqrsf. Aquí no se repite: si se
+   redeclarara body se perdería el fondo degradado común del sitio. */
+
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding-inline: var(--pad);
+}
+
+/* =========================================================
+   HERO A ANCHO COMPLETO
+
+   La fotografía ocupa TODA la franja como fondo y el texto va
+   encima, sobre la zona clara de la izquierda. La imagen está
+   compuesta a propósito con la persona a la derecha y el lado
+   izquierdo despejado, así que el texto no la tapa.
+
+   Se apila en tres capas, en este orden:
+     1. <img>              la fotografía de fondo
+     2. .hero-fade         velo blanco degradado a la izquierda
+     3. .hero-inner        el titular, los botones y las cifras
+
+   El velo es lo que garantiza que el texto se lea siempre,
+   incluso si algún día cambias la foto por una más cargada.
+
+   PARA CAMBIAR LA FOTO: sustituye el src del <img> en el HTML.
+   Usa una imagen apaisada (formato banner, tipo 2:1) con la
+   persona o el motivo a la DERECHA.
+   ========================================================= */
+.hero {
+  position: relative;
+  /* Sin padding lateral: la foto debe llegar a los dos bordes. */
+  width: 100%;
+  min-height: 560px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--bg-alt);
+}
+
+/* Renombrada desde .hero-bg: en css/styles.css esa clase es un DIV con
+   fondo oscuro, y al compartir nombre esta página heredaba ese fondo
+   mientras la fotografía terminaba de cargar. */
+.hero-foto {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* Encuadra hacia la derecha: al estrecharse la pantalla se
+     recorta el fondo vacío, no la persona. */
+  object-position: 72% center;
+}
+
+/* Velo blanco que se desvanece hacia la derecha. Sostiene la
+   lectura del texto sin ensuciar la foto. */
+.hero-fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg,
+      rgba(255, 255, 255, 0.97) 0%,
+      rgba(255, 255, 255, 0.92) 34%,
+      rgba(255, 255, 255, 0.55) 52%,
+      rgba(255, 255, 255, 0) 68%);
+}
+
+/* Capa del contenido: por encima de foto y velo. */
+.hero-inner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding-inline: var(--pad);
+  padding-block: 72px;
+}
+
+/* El texto ocupa poco más de la mitad: nunca invade a la
+   persona de la foto. */
+.hero-copy {
+  max-width: 560px;
+}
+
+.hero h1 {
+  /* Misma escala que los h1 de hero del resto del sitio
+     (ver "ESCALA DE TÍTULOS" en css/styles.css). */
+  font-size: clamp(2.2rem, 4.2vw, 3.6rem);
+  /* Algo más de aire: el titular parte en dos líneas y en
+     mayúsculas se veían pegadas. */
+  line-height: 1.1;
+  font-weight: 800;
+  /* Sin apretar: en mayúsculas la display necesita su aire. */
+  letter-spacing: 0;
+  margin-bottom: 22px;
+}
+
+/* La parte destacada del titular, en azul de marca. */
+.hero h1 em {
+  font-style: normal;
+  color: var(--blue);
+}
+
+.hero p {
+  font-size: 17.5px;
+  color: var(--text-soft);
+  max-width: 50ch;
+  margin-bottom: 34px;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 44px;
+}
+
+/* =========================================================
+   BOTONES
+   ========================================================= */
+.btn-solid {
+  display: inline-block;
+  padding: 14px 28px;
+  border-radius: 10px;
+  background: var(--blue);
+  color: #fff;
+  font-size: 14.5px;
+  font-weight: 600;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn-solid:hover {
+  background: var(--blue-hover);
+  transform: translateY(-2px);
+}
+
+.btn-ghost {
+  display: inline-block;
+  padding: 14px 28px;
+  border-radius: 10px;
+  border: 1.5px solid var(--line-strong);
+  color: var(--text);
+  font-size: 14.5px;
+  font-weight: 600;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-ghost:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+}
+
+/* =========================================================
+   POR QUÉ TRABAJAR EN LA FE
+   Bloque de propósito, al estilo de la referencia enviada.
+   ========================================================= */
+.why {
+  background: var(--bg-alt);
+  border-block: 1px solid var(--line);
+  padding-block: 84px;
+}
+
+.why-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+}
+
+.why h2 {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.15;
+  margin-bottom: 20px;
+}
+
+.why h2 em {
+  font-style: normal;
+  color: var(--blue);
+}
+
+.why p {
+  color: var(--text-soft);
+  font-size: 16.5px;
+  margin-bottom: 16px;
+  max-width: 56ch;
+}
+
+/* Las tres razones, como lista con marca azul a la izquierda. */
+.why-points {
+  display: grid;
+  gap: 22px;
+}
+
+.why-point {
+  padding-left: 20px;
+  border-left: 3px solid var(--blue);
+}
+
+.why-point strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.why-point span {
+  color: var(--text-soft);
+  font-size: 15px;
+}
+
+/* =========================================================
+   ETIQUETA DE SECCIÓN
+   Encabezado de la sección de beneficios.
+   ========================================================= */
+.section-label {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding-bottom: 20px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+}
+
+.section-label h2 {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.section-label span {
+  font-size: 13.5px;
+  color: var(--text-mute);
+}
+
+/* =========================================================
+   BENEFICIOS
+   ========================================================= */
+.benefits {
+  padding-block: 84px;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 36px 40px;
+  margin-top: 44px;
+}
+
+.benefit-rule {
+  width: 38px;
+  height: 3px;
+  border-radius: 2px;
+  background: var(--blue);
+  margin-bottom: 16px;
+}
+
+.benefit h3 {
+  font-size: 17px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.benefit p {
+  font-size: 14.5px;
+  color: var(--text-soft);
+}
+
+/* =========================================================
+   CIERRE / BANCO DE TALENTO
+   ========================================================= */
+.closing {
+  background: var(--blue);
+  color: #fff;
+  padding-block: 76px;
+  text-align: center;
+}
+
+.closing h2 {
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: 0;
+  margin-bottom: 14px;
+}
+
+.closing p {
+  font-size: 16.5px;
+  color: rgba(255, 255, 255, 0.88);
+  max-width: 56ch;
+  margin: 0 auto 30px;
+}
+
+/* Sobre el fondo azul el botón se invierte: blanco con texto azul. */
+.closing .btn-solid {
+  background: #fff;
+  color: var(--blue);
+}
+
+.closing .btn-solid:hover {
+  background: #f0f6ff;
+}
+
+.closing-mail {
+  display: block;
+  margin-top: 20px;
+  font-size: 14.5px;
+  color: rgba(255, 255, 255, 0.8);
+  text-decoration: underline;
+}
+
+/* =========================================================
+   RESPONSIVE
+
+   1000px → el hero y "por qué" pasan a una sola columna y la
+           foto se coloca encima del texto.
+    860px → la rejilla de beneficios baja a 2 columnas.
+    560px → todo a una columna.
+   ========================================================= */
+/* =========================================================
+   RESPONSIVE
+
+   1000px → "por qué" pasa a una sola columna. El hero conserva
+           la foto de fondo pero se acorta y el velo se vuelve
+           más opaco, porque el texto ya se le encima.
+    860px → la rejilla de beneficios baja a 2 columnas.
+    560px → todo a una columna. En móvil la foto pasa a ser un
+           fondo tenue: la prioridad es que el texto se lea.
+   ========================================================= */
+@media (max-width: 1000px) {
+
+  .why-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .hero {
+    min-height: 480px;
+  }
+
+  .hero-inner {
+    padding-block: 56px;
+  }
+
+  /* Al estrecharse, el texto invade la zona de la persona:
+     el velo se cierra para que siga leyéndose. */
+  .hero-fade {
+    background: linear-gradient(100deg,
+        rgba(255, 255, 255, 0.97) 0%,
+        rgba(255, 255, 255, 0.94) 46%,
+        rgba(255, 255, 255, 0.72) 66%,
+        rgba(255, 255, 255, 0.35) 100%);
+  }
+}
+
+@media (max-width: 860px) {
+
+  .benefits-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  :root {
+    --pad: 20px;
+  }
+
+  .hero {
+    min-height: 0;
+  }
+
+  .hero-inner {
+    padding-block: 44px;
+  }
+
+  /* En pantalla estrecha no cabe texto Y persona: la foto se
+     convierte en un fondo tenue y el titular manda. */
+  .hero-fade {
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  .hero-foto {
+    object-position: 80% center;
+  }
+
+  .benefits-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* El clamp del h1 ya baja solo hasta 2.2rem en móvil: no hace
+     falta fijar aquí un tamaño que se saldría de la escala. */
+
+  .hero-actions .btn-solid,
+  .hero-actions .btn-ghost {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* =========================================================
+   ANIMACIÓN DE ENTRADA AL HACER SCROLL
+
+   Es el mismo sistema que usan index, nosotros y pqrsf, y lo
+   mueve el mismo js/script.js: los elementos con class="reveal"
+   empiezan invisibles y desplazados, y cuando el scroll los deja
+   a la vista el script les añade la clase "visible".
+
+   Está copiado aquí (y no enlazado desde css/styles.css) porque
+   esta página es autónoma a propósito: así se puede rediseñar
+   sin arrastrar los estilos de las demás. Si algún día cambias
+   la animación allá, acuérdate de cambiarla también aquí.
+
+   DIRECCIONES — añade una junto a "reveal":
+     class="reveal"                 entra desde abajo (por defecto)
+     class="reveal reveal-left"     entra desde la izquierda
+     class="reveal reveal-right"    entra desde la derecha
+     class="reveal reveal-zoom"     entra creciendo
+
+   RETARDOS — para que no entren todos a la vez:
+     class="reveal delay-1"   espera 0.12s
+     class="reveal delay-2"   espera 0.24s
+   ========================================================= */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity .8s ease, transform .8s cubic-bezier(0.22, 0.61, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-left {
+  transform: translateX(-60px);
+}
+
+.reveal-right {
+  transform: translateX(60px);
+}
+
+.reveal-zoom {
+  transform: scale(0.92);
+}
+
+/* Estado final, común a todas las direcciones. */
+.reveal.visible {
+  opacity: 1;
+  transform: translateX(0) translateY(0) scale(1);
+}
+
+.delay-1 {
+  transition-delay: .12s;
+}
+
+.delay-2 {
+  transition-delay: .24s;
+}
+
+.delay-3 {
+  transition-delay: .36s;
+}
+
+/* En móvil las columnas se apilan, así que entrar "de lado"
+   pierde sentido: se reduce el recorrido a la mitad. */
+@media (max-width: 820px) {
+  .reveal-left {
+    transform: translateX(-28px);
+  }
+
+  .reveal-right {
+    transform: translateX(28px);
+  }
+}
+
+/* =========================================================
+   MENOS MOVIMIENTO
+
+   Si la persona pidió menos animación en su sistema, se quitan
+   los desplazamientos.
+
+   OJO: los .reveal se dejan VISIBLES a propósito. Anular aquí
+   la transición con un `* { transition: none }` dejaría el
+   contenido en opacity:0 para siempre, porque el script solo
+   cambia la clase y es la transición la que lo revela. Es decir:
+   la página entera quedaría en blanco.
+   ========================================================= */
+@media (prefers-reduced-motion: reduce) {
+
+  .reveal,
+  .reveal-left,
+  .reveal-right,
+  .reveal-zoom {
+    transform: none;
+    transition: opacity .4s ease;
+  }
+}

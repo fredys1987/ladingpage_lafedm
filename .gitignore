@@ -1,0 +1,34 @@
+# =============================================================
+#  QUÉ NO SE SUBE AL REPOSITORIO
+# =============================================================
+
+# ---- Sitio de encuestas y canal ético ----
+# Se despliega aparte y contiene datos que NO deben salir de
+# producción: en encuesta/api/config.php están las credenciales
+# reales de la base de datos, y en encuesta/almacen/evidencias/
+# hay archivos adjuntos a denuncias del canal ético.
+#
+# Si alguna vez hiciera falta versionarlo, hay que sacar primero
+# las credenciales a variables de entorno y dejar fuera el
+# almacén de evidencias.
+encuesta/
+
+# ---- Copias de seguridad del proceso de diseño ----
+*.bak
+*.pre-unificacion
+*~
+
+# ---- Archivos del sistema ----
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# ---- Editores ----
+.vscode/
+.idea/
+*.code-workspace
+
+# ---- Temporales ----
+*.log
+*.tmp
+_prueba*.html
